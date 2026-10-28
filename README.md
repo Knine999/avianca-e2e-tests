@@ -1,17 +1,24 @@
 # Avianca E2E tests
 
-This is my automation for Test 4 of the QA technical challenge: a one-way flight search on avianca.com. I wrote it with Python, Playwright and pytest.
+This is my automation for Test 4 of the QA technical challenge: a one-way flight selection on avianca.com. I wrote it with Python, Playwright and pytest.
 
 ## What is covered
 
-- **Test 4 (mandatory):** steps 1 to 7 are automated on the English site, from opening the home page to the flight search.
-- **Steps 8 to 18:** not automated. The test is marked as an expected failure from step 8, so the report shows where it stops.
+The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appear twice.
+
+- **Labels 1 to 7 (automated):** open the site, choose One way, choose the destination, set the departure date, set two adults, confirm, and search. The test checks the main result of each label, not every expected result. Known gaps:
+  - Label 2 checks that the Return field is hidden, but not that the selector shows "One way".
+  - Label 4 does not check the DD/MM/YYYY date format.
+  - Label 5 does not check the state of the plus and minus icons.
+  - Label 6 does not check that the dropdown closes.
+  - Label 7 checks the booking URL, not the list of outbound flights.
+- **Labels 8 to 18 (not automated):** the test is marked as an expected failure from label 8, so the report shows where it stops.
 
 ## Status and blocker
 
-Avianca's bot protection (Akamai) blocks the automated browser after the search. Some runs end with an "Access Denied" page, and in others the cookie banner stays on screen. I did not try to get around the block. Steps 8 to 18 depend on the pages behind it, so I could not automate them. The full description, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md).
+Avianca's bot protection (Akamai) blocks the automated browser after the search. Some runs end with an "Access Denied" page, and in others the cookie banner stays on screen. I did not try to get around the block. I walked through the whole flow by hand, and it works. I could not automate labels 8 to 18 because of the block. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
 
-The English version with the Miami origin and the cookie fix still needs a full run. The site notes are in [docs/exploration.md](docs/exploration.md).
+The site notes are in [docs/exploration.md](docs/exploration.md).
 
 ## Use of AI as a support tool
 
@@ -58,16 +65,13 @@ python -m playwright show-trace test-results\<name>.zip
 - `pages/home_page.py`: the search form
 - `tests/test_04_one_way_flight_selection.py`: Test 4
 - `utils/config.py`: origin, destination, dates and timeouts
-- `docs/`: requirements, site notes, and the blocker with its evidence
+- `docs/`: requirements, site notes, the manual validation, and the blocker with its evidence
 
 ## Known limits
 
+- The challenge asks only for the destination. The test also sets the origin to Miami, so it does not depend on the visitor's location.
 - Prices and availability change, so the test checks the flow, not the price.
 - The search runs against the production site. The test never pays or books.
 - The tests run at desktop size only (1280 x 900).
 - The plus and minus passenger buttons have no accessible names, so I find them by position.
 - I accept all cookies because "Accept" is the only button that closes the banner on the English site.
-
-## Blocker and next steps
-
-Steps 8 to 18 are blocked by the site's bot protection after the search. The details, the evidence and the proposed way to handle the flow are in [docs/blocker.md](docs/blocker.md).
