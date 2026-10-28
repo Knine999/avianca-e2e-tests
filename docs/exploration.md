@@ -4,7 +4,7 @@ Notes from opening avianca.com by hand and from the automated runs. Anything not
 
 ## English site (`/en`)
 
-- The default origin depends on the visitor's location. When testing from the US the origin is Miami (MIA). The test sets the origin explicitly.
+- The default origin depends on the visitor's location. In my runs, the English site showed Miami (MIA), while the Spanish site showed Bogota (BOG). The test sets the origin explicitly.
 - Prices and the currency are in USD on this version.
 - Trip type defaults to "Round trip". "One way" is the tab next to it.
 - Passengers default to 1.
@@ -20,9 +20,9 @@ Observed in an earlier run, before the project moved to the English site.
 - Searching opens `booking.avianca.com/av/booking/avail` with the search values in the URL.
 - One run was blocked with "Access Denied" on `/es`. The page shows a reference number and an `errors.edgesuite.net` link. That is Akamai's bot protection.
 
-## First automated run on Windows (2026-10-27)
+## Automated runs on Windows (2026-10-27)
 
-Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Playwright.
+Each run used `pytest -m e2e --headed -s` on Windows, Python 3.12 and the Chromium that Playwright installs. Every bullet is one run and the fix that came out of it.
 
 - Label 1 passed. The cookie banner was accepted and the Round trip tab was visible.
 - Label 2 passed. Choosing One way hid the Return field.
@@ -49,11 +49,11 @@ Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Play
 - With Round trip selected and no dates, Search opens the calendar and shows "Required" under both date fields.
 - Buenos Aires shows up in the Destination list with the code EZE, and the field then shows "(EZE)".
 
-## Not explored
+## Not automated
 
-Steps 8 to 18 of Test 4: fares, the upgrade pop-up, the passenger form, contact details, services and the payment summary.
+Labels 8 to 18 of Test 4: fares, the upgrade pop-up, the passenger form, contact details, services and the payment summary. I walked through them by hand (see [manual_validation.md](manual_validation.md)), but the automated browser is blocked before reaching them.
 
 ## Open questions
 
-- Does the full English flow pass in an automated run once the cookie change is in place? This still needs a run.
-- Does the search results page show the outbound flight list as the challenge expects (label 7)? The automated test only checks the booking URL.
+- Is the MM/DD/YYYY date format on the English site expected, or is it a defect? The challenge expects DD/MM/YYYY.
+- Is there a staging environment or an allowlist for automated runs? Without one, labels 8 to 18 cannot run.

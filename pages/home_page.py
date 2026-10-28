@@ -63,8 +63,7 @@ class HomePage(BasePage):
         expect(self.page.get_by_role("listbox", name=field, exact=True)).to_be_visible()
 
     def expect_airport(self, field: str, code: str) -> None:
-        expect(self._airport_box(field)).to_have_value(re.compile(rf"\({re.escape(code)}\)")) 
-
+        expect(self._airport_box(field)).to_have_value(re.compile(rf"\({re.escape(code)}\)"))
 
     def choose_departure(self, day: date) -> None:
         # The calendar shows two months, so the same day number appears twice.

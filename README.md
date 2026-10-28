@@ -57,8 +57,8 @@ If PowerShell does not let you activate the environment, run `Set-ExecutionPolic
 ```powershell
 pytest -m e2e -rx             # run Test 4 and Test 2 and show the reason for any expected failure
 pytest -m e2e -s -rx          # same, printing the test output
-pytest tests/test_02_round_trip_one_way_validation.py --headed -s   # run only Test 2
-pytest tests/test_04_one_way_flight_selection.py --headed -s        # run only Test 4
+pytest tests/test_02_round_trip_one_way_validation.py -s   # run only Test 2
+pytest tests/test_04_one_way_flight_selection.py -s        # run only Test 4
 ```
 
 The tests always open a visible browser, because `pytest.ini` includes `--headed`. In headless mode the site answers the home page with "Access Denied", so nothing can be tested. If a test is blocked, it stops with that reason instead of failing on a missing element.

@@ -31,7 +31,7 @@ The versions are pinned on purpose. A newer Playwright can change how locators a
 6. Find the locators you need. The quickest way is the recorder: `python -m playwright codegen https://www.avianca.com/en`. It opens a browser and writes the locator for each click you make. Use the output as a starting point, not as the final code.
 7. Write `pages/base_page.py` for shared code, such as the cookie banner, and `pages/home_page.py` for the search form.
 8. Write the test as numbered steps that match the challenge document, one comment per step.
-9. Run it with `pytest -m e2e --headed -s`, watch the browser and fix any locator that does not match the real page.
+9. Run it with `pytest -m e2e -s`, watch the browser and fix any locator that does not match the real page. The browser is always visible because `pytest.ini` includes `--headed`.
 10. Mark the steps you did not automate, so the report shows where the test stops.
 11. Update the README with the status and the commands.
 

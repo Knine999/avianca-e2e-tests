@@ -3,7 +3,7 @@ import os
 from datetime import date, datetime, timedelta, timezone
 
 # We test the English site. Its default origin depends on where the visitor is
-# (Miami when testing from the US), so the origin is always set explicitly.
+# (in my runs it showed Miami), so the origin is always set explicitly.
 BASE_URL = os.getenv("BASE_URL", "https://www.avianca.com/en")
 
 ORIGIN_CITY = "Miami"
