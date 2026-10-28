@@ -14,6 +14,10 @@ class BasePage:
     def open(self) -> None:
         self.page.goto(config.BASE_URL, wait_until="domcontentloaded")
 
+    def is_blocked(self) -> bool:
+        # The bot protection answers with a plain "Access Denied" page instead of the site.
+        return self.page.get_by_role("heading", name="Access Denied", exact=True).is_visible()
+
     def accept_cookies_if_shown(self) -> None:
         # The cookie banner (OneTrust) covers the search form. We wait for the
         # Accept button itself, because the banner's outer container does not

@@ -23,6 +23,8 @@ def test_one_way_flight_selection(page):
 
     # Label 1: open the site. The trip type defaults to Round trip.
     home.open()
+    if home.is_blocked():
+        pytest.xfail("the home page was blocked by the site's bot protection (Access Denied)")
     home.accept_cookies_if_shown()
     expect(page.get_by_text(HomePage.ROUND_TRIP, exact=True)).to_be_visible()
 

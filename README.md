@@ -1,8 +1,10 @@
 # Avianca E2E tests
 
-This is my automation for Test 4 of the QA technical challenge: a one-way flight selection on avianca.com. I wrote it with Python, Playwright and pytest.
+This is my automation for the QA technical challenge on avianca.com: Test 4 (mandatory, one-way flight selection) and Test 2 (optional, round trip and one way form validation). I wrote it with Python, Playwright and pytest.
 
 ## What is covered
+
+### Test 4 (mandatory): one-way flight selection
 
 The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appear twice.
 
@@ -12,9 +14,16 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
   - Label 7 checks the booking URL, not the list of outbound flights, because the results page is blocked in automated runs.
 - **Labels 8 to 18 (not automated):** the test is marked as an expected failure from label 8, so the report shows where it stops.
 
+### Test 2 (optional): round trip and one way form validation
+
+All 7 steps are automated and pass. The test stays on the home page, so the bot protection on the results page does not affect it. Known gaps:
+  - Step 3 checks that the Return field is hidden, but not that the selector shows "One way".
+  - Step 5 checks that the Destination airport list opens, but not its "All the airports" title.
+  - Step 7 checks that the calendar opens and that two "Required" messages appear, but not that they are red.
+
 ## Status and blocker
 
-In my automated runs, labels 1 to 6 pass and the search opens the booking URL with the right values. A few seconds later the results page is replaced by an \"Access denied\" page: \"The request was blocked by the security rules (error code 15)\", served by Imperva. So no flights are shown, label 7 is only partly checked and labels 8 to 18 are not automated. The test detects this page and reports it as the reason it stops. I did not try to get around the block. I walked through the whole flow by hand in Chrome, and there the results page works. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
+This applies to Test 4. In my automated runs, labels 1 to 6 pass and the search opens the booking URL with the right values. A few seconds later the results page is replaced by an "Access denied" page: "The request was blocked by the security rules (error code 15)", served by Imperva. So no flights are shown, label 7 is only partly checked and labels 8 to 18 are not automated. The test detects this page and reports it as the reason it stops. I did not try to get around the block. I walked through the whole flow by hand in Chrome, and there the results page works. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
 
 The site notes are in [docs/exploration.md](docs/exploration.md).
 
@@ -46,9 +55,13 @@ If PowerShell does not let you activate the environment, run `Set-ExecutionPolic
 ## Running
 
 ```powershell
-pytest -m e2e                 # run Test 4 without a window
-pytest -m e2e --headed -s     # run Test 4 in a visible browser and print the output
+pytest -m e2e -rx             # run Test 4 and Test 2 and show the reason for any expected failure
+pytest -m e2e -s -rx          # same, printing the test output
+pytest tests/test_02_round_trip_one_way_validation.py --headed -s   # run only Test 2
+pytest tests/test_04_one_way_flight_selection.py --headed -s        # run only Test 4
 ```
+
+The tests always open a visible browser, because `pytest.ini` includes `--headed`. In headless mode the site answers the home page with "Access Denied", so nothing can be tested. If a test is blocked, it stops with that reason instead of failing on a missing element.
 
 If a test fails, look in `test-results\` for a screenshot (`.png`) and a trace (`.zip`). Open the trace with:
 
@@ -61,6 +74,7 @@ python -m playwright show-trace test-results\<name>.zip
 - `conftest.py`: browser settings and the `page` fixture
 - `pages/base_page.py`: shared code, including the cookie banner
 - `pages/home_page.py`: the search form
+- `tests/test_02_round_trip_one_way_validation.py`: Test 2
 - `tests/test_04_one_way_flight_selection.py`: Test 4
 - `utils/config.py`: origin, destination, dates and timeouts
 - `docs/`: requirements, site notes, the manual validation, and the blocker with its evidence

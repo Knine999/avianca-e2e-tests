@@ -39,6 +39,16 @@ Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Play
 - Seventh run: the search reached the same URL with the right values and the server answered 200, but the page stayed blank for more than 15 seconds and the click timed out. The only other request to that domain was a script with an obscured path, which looks like bot protection. The Search click now has the navigation timeout.
 - Eighth run, with a 20 second wait on the results page: the page showed "Access denied. The request was blocked by the security rules (error code 15)", sent via Imperva. The server answered 403 to the second request for the results URL. Details in [blocker.md](blocker.md).
 
+## Headless runs
+
+- Running both tests without `--headed` failed at step 1. The home page showed Akamai's "Access Denied" page instead of the site. With `--headed` the home page loads.
+
+## Test 2 findings
+
+- The Departure and Return texts are only labels. The real controls are transparent buttons on top of them, named "Departure" and "Return". Clicking them opens the calendar.
+- With Round trip selected and no dates, Search opens the calendar and shows "Required" under both date fields.
+- Buenos Aires shows up in the Destination list with the code EZE, and the field then shows "(EZE)".
+
 ## Not explored
 
 Steps 8 to 18 of Test 4: fares, the upgrade pop-up, the passenger form, contact details, services and the payment summary.

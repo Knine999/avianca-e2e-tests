@@ -2,7 +2,7 @@
 
 ## Summary
 
-In my automated runs with Playwright, the search reaches the booking URL with the right values, but a few seconds later the results page is replaced by an \"Access denied\" page from the site's bot protection. My manual walk-through in Chrome completed the whole flow (see [manual_validation.md](manual_validation.md)). So the block affects the automated browser, not the flow itself.
+In my automated runs with Playwright, the search reaches the booking URL with the right values, but a few seconds later the results page is replaced by an "Access denied" page from the site's bot protection. My manual walk-through in Chrome completed the whole flow (see [manual_validation.md](manual_validation.md)). So the block affects the automated browser, not the flow itself.
 
 ## What I saw in automated runs
 
@@ -29,6 +29,12 @@ The cookies match two bot protection products. `_abck`, `bm_sz`, `ak_bmsc` and `
 - The first "Access Denied" I saw, on `/es`, was a different page. It came from Akamai on `www.avianca.com` (with an `errors.edgesuite.net` link). The one on the results page comes from Imperva on `booking.avianca.com`.
 
 The test now waits for the block page and, if it appears, stops with the reason "the results page was blocked by the site's bot protection".
+
+## Headless mode
+
+When the tests run without a visible browser (headless), the site blocks the home page itself. `www.avianca.com/en` answers with Akamai's "Access Denied" page and a reference number, so neither test can start. Evidence: [06_home_access_denied_headless.jpeg](evidence/06_home_access_denied_headless.jpeg).
+
+With a visible browser (`--headed`) the home page loads and both tests run. That is why `pytest.ini` includes `--headed`. If the home page is blocked anyway, the tests stop with the reason "the home page was blocked by the site's bot protection".
 
 ## Labels not automated
 

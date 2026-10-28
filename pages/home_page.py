@@ -45,6 +45,27 @@ class HomePage(BasePage):
         )
         option.first.click()
 
+    def open_date_field(self, label: str) -> None:
+        # The visible text is only a label. The real control is a transparent
+        # button on top of it, named "Departure" or "Return".
+        self.page.get_by_role("button", name=label, exact=True).click()
+
+    def open_airport_field(self, field: str) -> None:
+        self._airport_box(field).click()
+
+    def expect_calendar_open(self) -> None:
+        expect(self.page.locator('button[data-name="dayCell"]').first).to_be_visible()
+
+    def close_popup(self) -> None:
+        self.page.keyboard.press("Escape")
+
+    def expect_airport_list_open(self, field: str) -> None:
+        expect(self.page.get_by_role("listbox", name=field, exact=True)).to_be_visible()
+
+    def expect_airport(self, field: str, code: str) -> None:
+        expect(self._airport_box(field)).to_have_value(re.compile(rf"\({re.escape(code)}\)")) 
+
+
     def choose_departure(self, day: date) -> None:
         # The calendar shows two months, so the same day number appears twice.
         # Each day button has a data-date that starts with the full date.
