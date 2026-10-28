@@ -7,7 +7,7 @@ This is a manual walk-through of the one-way flow on the English site, done by h
 - Site: https://www.avianca.com/en
 - Date of the run: 2026-10-27 (local time)
 - Origin: Miami (MIA). Destination: San Andres (ADZ). Two adults. Departure 14 days ahead.
-- Browser: to be confirmed by the tester.
+- Browser: Google Chrome.
 
 ## Numbering
 
@@ -38,4 +38,4 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 | 19 | 17 | Pass | Purchase summary. |
 | 20 | 18 | Pass | Close the browser. |
 
-To confirm: the run stopped before payment, and no payment data was entered or submitted.
+The run stopped at checkout, before payment. No payment data was entered or submitted. The browser was then closed (label 18).
