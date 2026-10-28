@@ -37,6 +37,7 @@ Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Play
 - The Departure field shows the date as MM/DD/YYYY on the English site (11/10/2026 for November 10). The challenge expects DD/MM/YYYY.
 - Sixth run: labels 1 to 6 passed and the search opened `booking.avianca.com/av/booking/avail`. The result was xfailed. Label 7 passed only because it checks the URL. The saved trace shows the results page was blank.
 - Seventh run: the search reached the same URL with the right values and the server answered 200, but the page stayed blank for more than 15 seconds and the click timed out. The only other request to that domain was a script with an obscured path, which looks like bot protection. The Search click now has the navigation timeout.
+- Eighth run, with a 20 second wait on the results page: the page showed "Access denied. The request was blocked by the security rules (error code 15)", sent via Imperva. The server answered 403 to the second request for the results URL. Details in [blocker.md](blocker.md).
 
 ## Not explored
 

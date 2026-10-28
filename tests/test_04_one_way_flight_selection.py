@@ -3,13 +3,14 @@
 The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each
 appear twice. The comments below use the challenge labels.
 
-Automated: labels 1 to 7. Label 7 only checks the booking URL, because the
-results page stays blank in the automated browser. Labels 8 to 18 are not
-automated for the same reason. See docs/blocker.md.
+Automated: labels 1 to 7. In automated runs the results page is replaced by an
+"Access denied" page from the site's bot protection, so label 7 only checks
+the booking URL and labels 8 to 18 are not automated. See docs/blocker.md.
 """
 import re
 
 import pytest
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
@@ -52,6 +53,15 @@ def test_one_way_flight_selection(page):
         timeout=config.NAVIGATION_TIMEOUT_MS,
     )
 
+    # The bot protection shows its "Access denied" page inside a frame a few seconds
+    # after the search. If it shows up, report it as the reason the test stops here.
+    blocked = page.frame_locator("iframe").first.get_by_role("heading", name="Access denied")
+    try:
+        blocked.wait_for(timeout=config.NAVIGATION_TIMEOUT_MS)
+        pytest.xfail("label 7: the results page was blocked by the site's bot protection (Access denied)")
+    except PlaywrightTimeoutError:
+        pass
+
     # Labels 8 to 18 are not automated yet. The challenge lists 20 entries because
     # labels 13 and 16 repeat.
-    pytest.xfail("labels 8 to 18 are not automated: the results page stays blank in the automated browser")
+    pytest.xfail("labels 8 to 18 are not automated yet")
