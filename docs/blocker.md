@@ -2,12 +2,13 @@
 
 ## Summary
 
-Some of my automated runs with Playwright were blocked by Avianca's bot protection (Akamai). In my latest run, on 2026-10-27, labels 1 to 7 passed and the test reached the booking page without a block. So the block is intermittent. My manual walk-through in a normal browser completed the whole flow (see [manual_validation.md](manual_validation.md)).
+In my automated runs with Playwright, the search reaches the booking URL with the right values, but the results page stays blank, so no flights are shown. In other runs the site returned an \"Access Denied\" page from Avianca's bot protection (Akamai). My manual walk-through in Chrome completed the whole flow (see [manual_validation.md](manual_validation.md)). So the block affects the automated browser, not the flow itself.
 
 ## What I saw in automated runs
 
 - **Access Denied (Akamai).** In one run the browser was sent to the Spanish site (`/es`) and the page returned "Access Denied", with a reference number and a link to `errors.edgesuite.net`. Evidence: [02_access_denied_spanish_site.png](evidence/02_access_denied_spanish_site.png).
 - **Cookie banner over the page.** In another run the English home page loaded, but the OneTrust banner stayed on screen and covered the page. I changed how the test handles the banner after this run. Evidence: [01_english_home_cookie_banner.png](evidence/01_english_home_cookie_banner.png).
+- **Blank results page.** After the search, the browser lands on `booking.avianca.com/av/booking/avail` with the right search values and the server answers 200, but the page stays white. The only other request to that domain is a script with an obscured path, which is how bot protection scripts usually load. Evidence: [03_booking_page_blank_automated.jpeg](evidence/03_booking_page_blank_automated.jpeg).
 
 ## Labels not automated
 
@@ -27,7 +28,7 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 | 17 | Review the purchase summary. Airports, date, fare and flight number must match the selection. Amounts in USD. |
 | 18 | Close the browser. |
 
-Labels 8 to 18 are not automated yet. Earlier runs were blocked before reaching them. The latest run reached the booking page, so these labels can be mapped next. The manual run shows that they work.
+Labels 8 to 18 are not automated, because the automated browser never sees the results page. The manual run shows that these labels work for a person.
 
 ## What I did not do
 

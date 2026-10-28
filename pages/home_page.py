@@ -5,6 +5,7 @@ from datetime import date
 from playwright.sync_api import expect
 
 from pages.base_page import BasePage
+from utils import config
 
 
 class HomePage(BasePage):
@@ -79,7 +80,10 @@ class HomePage(BasePage):
         self.page.get_by_role("button", name="Confirm", exact=True).click()
 
     def search(self) -> None:
-        self.page.get_by_role("button", name="Search", exact=True).click()
+        # the click waits for the booking page to start loading, which can take a while
+        self.page.get_by_role("button", name="Search", exact=True).click(
+            timeout=config.NAVIGATION_TIMEOUT_MS
+        )
 
     def _passenger_count(self):
         # the Passengers field shows the label and, next to it, the total

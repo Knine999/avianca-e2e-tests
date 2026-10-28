@@ -9,12 +9,12 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 - **Labels 1 to 7 (automated):** open the site, choose One way, choose the destination, set the departure date, set two adults, confirm, and search. The test checks the main result of each label, not every expected result. Known gaps:
   - Label 2 checks that the Return field is hidden, but not that the selector shows "One way".
   - Label 4 does not check the date format. On the English site the Departure field shows MM/DD/YYYY (for example 11/10/2026 for November 10), while the challenge expects DD/MM/YYYY. I report this as a difference instead of failing the test on it.
-  - Label 7 checks the booking URL, not the list of outbound flights.
+  - Label 7 checks the booking URL, not the list of outbound flights, because the results page stays blank in the automated browser.
 - **Labels 8 to 18 (not automated):** the test is marked as an expected failure from label 8, so the report shows where it stops.
 
 ## Status and blocker
 
-In my latest automated run, labels 1 to 7 passed and the test reached the booking page. In earlier runs, Avianca's bot protection (Akamai) returned an \"Access Denied\" page, so the block comes and goes. I did not try to get around it. Labels 8 to 18 are not automated yet. I walked through the whole flow by hand, and it works. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
+In my automated runs, labels 1 to 6 pass and the search opens the booking URL with the right values, but the results page stays blank in the automated browser, so no flights are shown. The page loads only a script with an obscured path, which looks like Avianca's bot protection (Akamai). In other runs the site returned an \"Access Denied\" page. I did not try to get around either one. Because of this, label 7 is only partly checked and labels 8 to 18 are not automated. I walked through the whole flow by hand in Chrome, and there the results page works. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
 
 The site notes are in [docs/exploration.md](docs/exploration.md).
 

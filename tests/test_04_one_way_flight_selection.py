@@ -3,8 +3,9 @@
 The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each
 appear twice. The comments below use the challenge labels.
 
-Automated: labels 1 to 7. Labels 8 to 18 are not automated yet. Earlier runs
-were blocked by the site's bot protection. See docs/blocker.md.
+Automated: labels 1 to 7. Label 7 only checks the booking URL, because the
+results page stays blank in the automated browser. Labels 8 to 18 are not
+automated for the same reason. See docs/blocker.md.
 """
 import re
 
@@ -53,4 +54,4 @@ def test_one_way_flight_selection(page):
 
     # Labels 8 to 18 are not automated yet. The challenge lists 20 entries because
     # labels 13 and 16 repeat.
-    pytest.xfail("labels 8 to 18 are not automated yet")
+    pytest.xfail("labels 8 to 18 are not automated: the results page stays blank in the automated browser")

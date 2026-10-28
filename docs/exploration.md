@@ -35,7 +35,8 @@ Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Play
 - In every run so far the tester had to click Accept on the cookie banner by hand. The test was waiting for the banner's outer container, which does not count as visible. It now waits for the Accept button.
 - Fifth run: the test accepted the cookie banner by itself. Origin, destination and date passed. The adult count was 2, but the check looked for the text "2 Adults", which the site does not show. The count is a number next to the plus and minus buttons, and those buttons are named Increase and Decrease. The test now checks the number and that both buttons are enabled.
 - The Departure field shows the date as MM/DD/YYYY on the English site (11/10/2026 for November 10). The challenge expects DD/MM/YYYY.
-- Sixth run: labels 1 to 7 passed and the test reached `booking.avianca.com/av/booking/avail`. No Access Denied page. The result was xfailed, which means the test stopped at label 8 on purpose.
+- Sixth run: labels 1 to 6 passed and the search opened `booking.avianca.com/av/booking/avail`. The result was xfailed. Label 7 passed only because it checks the URL. The saved trace shows the results page was blank.
+- Seventh run: the search reached the same URL with the right values and the server answered 200, but the page stayed blank for more than 15 seconds and the click timed out. The only other request to that domain was a script with an obscured path, which looks like bot protection. The Search click now has the navigation timeout.
 
 ## Not explored
 
