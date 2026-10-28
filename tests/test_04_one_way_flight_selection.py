@@ -51,5 +51,6 @@ def test_one_way_flight_selection(page):
         timeout=config.NAVIGATION_TIMEOUT_MS,
     )
 
-    # Labels 8 to 18 are not automated yet.
+    # Labels 8 to 18 are not automated yet. The challenge lists 20 entries because
+    # labels 13 and 16 repeat. The live site blocks automated sessions after the search.
     pytest.xfail("labels 8 to 18 are not automated: the live site blocks automated sessions after the search")

@@ -26,5 +26,5 @@ Steps 8 to 18 of Test 4: fares, the upgrade pop-up, the passenger form, contact 
 
 ## Open questions
 
-- Does the full English flow pass with the cookie change? This still needs a run.
-- Which number does Test 1 expect at the end of its steps: adults only, or adults plus infants?
+- Does the full English flow pass in an automated run once the cookie change is in place? This still needs a run.
+- Does the search results page show the outbound flight list as the challenge expects (label 7)? The automated test only checks the booking URL.
