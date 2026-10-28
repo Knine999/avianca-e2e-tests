@@ -2,7 +2,7 @@
 
 ## Summary
 
-My automated runs with Playwright are blocked by Avianca's bot protection (Akamai) after the search. My manual walk-through in a normal browser completed the whole flow without that block (see [manual_validation.md](manual_validation.md)). So the block affects automated sessions, not the flow itself.
+Some of my automated runs with Playwright were blocked by Avianca's bot protection (Akamai). In my latest run, on 2026-10-27, labels 1 to 7 passed and the test reached the booking page without a block. So the block is intermittent. My manual walk-through in a normal browser completed the whole flow (see [manual_validation.md](manual_validation.md)).
 
 ## What I saw in automated runs
 
@@ -27,7 +27,7 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 | 17 | Review the purchase summary. Airports, date, fare and flight number must match the selection. Amounts in USD. |
 | 18 | Close the browser. |
 
-Labels 8 to 18 are the part of the flow that automation cannot reach. The manual run shows that they work, so the test cases are valid. What fails is the automated session.
+Labels 8 to 18 are not automated yet. Earlier runs were blocked before reaching them. The latest run reached the booking page, so these labels can be mapped next. The manual run shows that they work.
 
 ## What I did not do
 
@@ -41,4 +41,4 @@ I did not change the IP address, the headers, the browser fingerprint or the use
 4. **Test the locators offline.** When an approved session is available, save the HTML of the pages in labels 8 to 18 into a `fixtures/` folder. Offline tests can then check that the locators match the saved pages. These tests do not call the live site, and they are named clearly so nobody reads them as live checks.
 5. **Keep the evidence.** On every run that fails, the screenshot and trace go to `test-results/`. Copy the important ones into `docs/evidence/`.
 
-Until one of these is in place, the test reports the blocker as an expected failure. It does not pass silently, and it does not fake the later steps.
+Until labels 8 to 18 are automated, the test marks them as an expected failure. It does not pass silently, and it does not fake the later steps.

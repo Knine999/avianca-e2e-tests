@@ -20,7 +20,7 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 | 1 | 1 | Pass | Cookie banner appeared. Accepting it removed the dark overlay. Round trip is available and the origin shows Miami. |
 | 2 | 2 | Pass | Choosing One way removes the Return field. |
 | 3 | 3 | Pass | San Andres fills the destination as expected. |
-| 4 | 4 | Pass | Departure field shows the selected date in DD/MM/YYYY format. Matches the expected result. |
+| 4 | 4 | Fail | The selected date is correct, but the Departure field shows it as MM/DD/YYYY. The challenge expects DD/MM/YYYY. |
 | 5 | 5 | Pass | Adult count is 2, and the minus and plus icons are enabled. Matches the expected result. |
 | 6 | 6 | Pass | Dropdown closes and the passenger selection is kept. Matches the expected result. |
 | 7 | 7 | Pass | Booking page shows the outbound flights for the selected itinerary. Matches the expected result. |

@@ -8,15 +8,13 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 
 - **Labels 1 to 7 (automated):** open the site, choose One way, choose the destination, set the departure date, set two adults, confirm, and search. The test checks the main result of each label, not every expected result. Known gaps:
   - Label 2 checks that the Return field is hidden, but not that the selector shows "One way".
-  - Label 4 does not check the DD/MM/YYYY date format.
-  - Label 5 does not check the state of the plus and minus icons.
-  - Label 6 does not check that the dropdown closes.
+  - Label 4 does not check the date format. On the English site the Departure field shows MM/DD/YYYY (for example 11/10/2026 for November 10), while the challenge expects DD/MM/YYYY. I report this as a difference instead of failing the test on it.
   - Label 7 checks the booking URL, not the list of outbound flights.
 - **Labels 8 to 18 (not automated):** the test is marked as an expected failure from label 8, so the report shows where it stops.
 
 ## Status and blocker
 
-Avianca's bot protection (Akamai) blocks the automated browser after the search. Some runs end with an "Access Denied" page, and in others the cookie banner stays on screen. I did not try to get around the block. I walked through the whole flow by hand, and it works. I could not automate labels 8 to 18 because of the block. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
+In my latest automated run, labels 1 to 7 passed and the test reached the booking page. In earlier runs, Avianca's bot protection (Akamai) returned an \"Access Denied\" page, so the block comes and goes. I did not try to get around it. Labels 8 to 18 are not automated yet. I walked through the whole flow by hand, and it works. The details, the evidence and my proposed approach are in [docs/blocker.md](docs/blocker.md). The manual results are in [docs/manual_validation.md](docs/manual_validation.md).
 
 The site notes are in [docs/exploration.md](docs/exploration.md).
 
@@ -73,5 +71,4 @@ python -m playwright show-trace test-results\<name>.zip
 - Prices and availability change, so the test checks the flow, not the price.
 - The search runs against the production site. The test never pays or books.
 - The tests run at desktop size only (1280 x 900).
-- The plus and minus passenger buttons have no accessible names, so I find them by position.
 - I accept all cookies because "Accept" is the only button that closes the banner on the English site.

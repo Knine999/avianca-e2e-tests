@@ -20,6 +20,23 @@ Observed in an earlier run, before the project moved to the English site.
 - Searching opens `booking.avianca.com/av/booking/avail` with the search values in the URL.
 - One run was blocked with "Access Denied" on `/es`. The page shows a reference number and an `errors.edgesuite.net` link. That is Akamai's bot protection.
 
+## First automated run on Windows (2026-10-27)
+
+Run with `pytest -m e2e --headed -s` on Windows, Python 3.12, Chromium from Playwright.
+
+- Label 1 passed. The cookie banner was accepted and the Round trip tab was visible.
+- Label 2 passed. Choosing One way hid the Return field.
+- Label 3 failed on the Origin field. Playwright found the "Origin" label, but the field container covered it, so the click timed out after 15 seconds. A site announcement bar (a "marquesina" element at the top of the page) also intercepted clicks.
+- This was not an Access Denied page. The test reached the home page and the form.
+- The fix was to click the input that the label points to, using its label, instead of the label text.
+- Second run: the click worked, but the label matched two elements (the input and the open list). The input has the combobox role, so the test now finds it by role and name.
+- Third run: typing worked, but no element with the text "(MIA)" showed up in the list. The test now types the city one key at a time, picks the option inside the field's list by the airport code, and skips the origin when it already shows Miami (MIA).
+- Fourth run: origin and destination passed. The date step failed because the calendar shows two months and the first "10" was a past, disabled day. The test now picks the day by its `data-date` attribute.
+- In every run so far the tester had to click Accept on the cookie banner by hand. The test was waiting for the banner's outer container, which does not count as visible. It now waits for the Accept button.
+- Fifth run: the test accepted the cookie banner by itself. Origin, destination and date passed. The adult count was 2, but the check looked for the text "2 Adults", which the site does not show. The count is a number next to the plus and minus buttons, and those buttons are named Increase and Decrease. The test now checks the number and that both buttons are enabled.
+- The Departure field shows the date as MM/DD/YYYY on the English site (11/10/2026 for November 10). The challenge expects DD/MM/YYYY.
+- Sixth run: labels 1 to 7 passed and the test reached `booking.avianca.com/av/booking/avail`. No Access Denied page. The result was xfailed, which means the test stopped at label 8 on purpose.
+
 ## Not explored
 
 Steps 8 to 18 of Test 4: fares, the upgrade pop-up, the passenger form, contact details, services and the payment summary.

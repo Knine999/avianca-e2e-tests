@@ -3,8 +3,8 @@
 The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each
 appear twice. The comments below use the challenge labels.
 
-Automated: labels 1 to 7. Labels 8 to 18 are not automated, because the live
-site blocks automated sessions after the search. See docs/blocker.md.
+Automated: labels 1 to 7. Labels 8 to 18 are not automated yet. Earlier runs
+were blocked by the site's bot protection. See docs/blocker.md.
 """
 import re
 
@@ -38,7 +38,7 @@ def test_one_way_flight_selection(page):
 
     # Label 5: set the adult count to 2.
     home.set_adults(2)
-    expect(page.get_by_text("2 Adults")).to_be_visible()
+    home.expect_adults(2)
 
     # Label 6: confirm the passengers.
     home.confirm_passengers()
@@ -52,5 +52,5 @@ def test_one_way_flight_selection(page):
     )
 
     # Labels 8 to 18 are not automated yet. The challenge lists 20 entries because
-    # labels 13 and 16 repeat. The live site blocks automated sessions after the search.
-    pytest.xfail("labels 8 to 18 are not automated: the live site blocks automated sessions after the search")
+    # labels 13 and 16 repeat.
+    pytest.xfail("labels 8 to 18 are not automated yet")

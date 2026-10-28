@@ -15,13 +15,15 @@ class BasePage:
         self.page.goto(config.BASE_URL, wait_until="domcontentloaded")
 
     def accept_cookies_if_shown(self) -> None:
-        # The cookie banner (OneTrust) covers the search form. On the English
-        # site, "Accept" is the button that closes it. "Set configuration"
-        # opened a panel and did not close the banner in our runs.
-        banner = self.page.locator("#onetrust-consent-sdk")
+        # The cookie banner (OneTrust) covers the search form. We wait for the
+        # Accept button itself, because the banner's outer container does not
+        # count as visible even when the banner is on screen.
+        accept = self.page.locator("#onetrust-accept-btn-handler").or_(
+            self.page.get_by_role("button", name="Accept", exact=True)
+        ).first
         try:
-            banner.wait_for(state="visible", timeout=COOKIE_BANNER_WAIT_MS)
+            accept.wait_for(state="visible", timeout=COOKIE_BANNER_WAIT_MS)
         except PlaywrightTimeoutError:
             return  # no banner, nothing to close
-        self.page.locator("#onetrust-accept-btn-handler").click()
-        banner.wait_for(state="hidden", timeout=config.NAVIGATION_TIMEOUT_MS)
+        accept.click()
+        accept.wait_for(state="hidden", timeout=config.NAVIGATION_TIMEOUT_MS)
