@@ -20,15 +20,15 @@ The challenge lists 20 entries under labels 1 to 18. Labels 13 and 16 each appea
 | 1 | 1 | Pass | Cookie banner appeared. Accepting it removed the dark overlay. Round trip is available and the origin shows Miami. |
 | 2 | 2 | Pass | Choosing One way removes the Return field. |
 | 3 | 3 | Pass | San Andres fills the destination as expected. |
-| 4 | 4 | Pass | |
-| 5 | 5 | Pass | |
-| 6 | 6 | Pass | |
-| 7 | 7 | Pass | |
-| 8 | 8 | Pass | |
-| 9 | 9 | Pass | |
-| 10 | 10 | Pass | |
-| 11 | 11 | Pass | |
-| 12 | 12 | Pass | |
+| 4 | 4 | Pass | Departure field shows the selected date in DD/MM/YYYY format. Matches the expected result. |
+| 5 | 5 | Pass | Adult count is 2, and the minus and plus icons are enabled. Matches the expected result. |
+| 6 | 6 | Pass | Dropdown closes and the passenger selection is kept. Matches the expected result. |
+| 7 | 7 | Pass | Booking page shows the outbound flights for the selected itinerary. Matches the expected result. |
+| 8 | 8 | Pass | Fare options are displayed. Matches the expected result. |
+| 9 | 9 | Pass | Upgrade pop-up opens. Matches the expected result. |
+| 10 | 10 | Pass | Trip Summary screen is displayed. Matches the expected result. |
+| 11 | 11 | Pass | Passenger Information screen opens. Matches the expected result. |
+| 12 | 12 | Pass | Passenger details for both passengers are entered. Matches the expected result. |
 | 13 | 13 | Pass | Contact details. |
 | 14 | 13 | Pass | Click Continue. |
 | 15 | 14 | Pass | The baggage section was not displayed for this itinerary. |
